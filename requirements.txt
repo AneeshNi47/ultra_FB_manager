@@ -1,0 +1,13 @@
+django
+gunicorn
+django-heroku
+Pillow
+django-storages
+boto3
+requests
+django-q
+redis
+django-rest-knox
+djangorestframework
+django-csvimport
+django-filter
