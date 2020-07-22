@@ -1,8 +1,48 @@
 import React, { Component } from "react";
-import { Icon, Menu, Sidebar } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/auth";
+import { Icon, Menu, Sidebar, Image } from "semantic-ui-react";
 
 export class HeaderOwn extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired
+  };
+
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+    console.log(user);
+    const authLinks = (
+      <ul className="navbar-nav ml-auto mt-lg-0">
+        <li className="nav-item">
+          <span className="navbar-text pt-50">
+            <a className="nav-link">
+              <strong>{user ? `Welcome ${user.profile.name}` : ""}</strong>
+            </a>
+          </span>
+        </li>
+        <li className="nav-item">
+          <Link to="/login" className="nav-link">
+            <button
+              onClick={this.props.logoutUser}
+              className="nav-link btn btn-sm text-light"
+            >
+              <i className="fas fa-sign-out-alt fa-lg" />
+            </button>
+          </Link>
+        </li>
+      </ul>
+    );
+
+    const guestLinks = (
+      <ul className="navbar-nav ml-auto mt-lg-0">
+        <li className="nav-item">
+          <span className="navbar-text pt-50" />
+        </li>
+      </ul>
+    );
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -61,20 +101,7 @@ export class HeaderOwn extends Component {
               <i className="fas fa-align-left" />
               Ultra Page Manager
             </a>
-            <ul className="navbar-nav ml-auto mt-lg-0">
-              <li className="nav-item">
-                <span className="navbar-text pt-50">
-                  <a className="nav-link">
-                    <strong>UserName</strong>
-                  </a>
-                </span>
-              </li>
-              <li className="nav-item">
-                <button className="nav-link btn btn-sm text-light">
-                  <i className="fas fa-sign-out-alt fa-lg" />
-                </button>
-              </li>
-            </ul>
+            {isAuthenticated ? authLinks : guestLinks}
           </div>
         </nav>
       </div>
@@ -82,4 +109,10 @@ export class HeaderOwn extends Component {
   }
 }
 
-export default HeaderOwn;
+const mapStateToProps = state => ({
+  auth: state.reducerAuth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(HeaderOwn);
