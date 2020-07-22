@@ -43,44 +43,78 @@ export class HeaderOwn extends Component {
         </li>
       </ul>
     );
+
+    const authSidebar = (
+      <Sidebar
+        as={Menu}
+        animation="push"
+        icon="labeled"
+        inverted
+        onHide={this.props.sidebar}
+        vertical
+        visible={this.props.visible}
+        width="thin"
+        className="white"
+      >
+        <Menu.Item as="a">
+          <Icon.Group size="massive">
+            <Icon name="facebook" />
+            <Icon
+              corner="bottom left"
+              size="tiny"
+              color="blue"
+              name="star outline"
+            />
+          </Icon.Group>
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="user" />
+          Profile
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="copy outline" />
+          Pages
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="settings" />
+          Settings
+        </Menu.Item>
+      </Sidebar>
+    );
+
+    const guestSideBar = (
+      <Sidebar
+        as={Menu}
+        animation="push"
+        icon="labeled"
+        inverted
+        onHide={this.props.sidebar}
+        vertical
+        visible={this.props.visible}
+        width="thin"
+        className="white"
+      >
+        <Menu.Item as="a">
+          <Icon.Group size="massive">
+            <Icon name="facebook" />
+            <Icon
+              corner="bottom left"
+              size="tiny"
+              color="blue"
+              name="star outline"
+            />
+          </Icon.Group>
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="user" />
+          Login
+        </Menu.Item>
+      </Sidebar>
+    );
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-          <Sidebar
-            as={Menu}
-            animation="push"
-            icon="labeled"
-            inverted
-            onHide={this.props.sidebar}
-            vertical
-            visible={this.props.visible}
-            width="thin"
-            className="white"
-          >
-            <Menu.Item as="a">
-              <Icon.Group size="massive">
-                <Icon name="facebook" />
-                <Icon
-                  corner="bottom left"
-                  size="tiny"
-                  color="blue"
-                  name="star outline"
-                />
-              </Icon.Group>
-            </Menu.Item>
-            <Menu.Item as="a">
-              <Icon name="user" />
-              Profile
-            </Menu.Item>
-            <Menu.Item as="a">
-              <Icon name="copy outline" />
-              Pages
-            </Menu.Item>
-            <Menu.Item as="a">
-              <Icon name="settings" />
-              Settings
-            </Menu.Item>
-          </Sidebar>
+          {isAuthenticated ? authSidebar : guestSideBar}
           <button
             className="navbar-toggler"
             type="button"

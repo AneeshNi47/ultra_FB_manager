@@ -24,7 +24,6 @@ export class Login extends Component {
 
   handleError = error => {
     console.log("Error");
-    this.setState({ error });
   };
   componentClicked = () => {
     console.log("clicked");
