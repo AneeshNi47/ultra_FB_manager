@@ -1,66 +1,45 @@
 import React, { Component } from "react";
-import store from "../../store";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { loginSuccess } from "../../actions/auth";
 import { FacebookProvider, LoginButton } from "react-facebook";
 
 export class Login extends Component {
-  state = {
-    isLoggedIn: false,
-    user_id: "",
-    name: "",
-    email: "",
-    picture: ""
-  };
-  handleResponse = data => {
-    console.log(data);
-    store.dispatch(loginSuccess(data));
-    this.setState({
-      isLoggedIn: true,
-      user_id: data.profile.id,
-      name: data.profile.name,
-      picture: data.profile.picture.data.url
-    });
+  static propTypes = {
+    loginSuccess: PropTypes.func.isRequired
   };
 
-  handleError = error => {
-    console.log("Error");
+  handleResponse = data => {
+    this.props.loginSuccess(data);
   };
-  componentClicked = () => {
-    console.log("clicked");
-  };
+
   render() {
     let fbContent;
-    if (this.state.isLoggedIn) {
-      fbContent = (
-        <div
-          style={{
-            width: "400px",
-            margin: "auto",
-            background: "#f4f4f4",
-            padding: "20px"
-          }}
-        >
-          <img src={this.state.picture} alt={this.state.name} />
-          <h2>{this.state.name}</h2>
-          <h3>{this.state.user_id}</h3>
-        </div>
-      );
-    } else {
+    if (!this.props.isAuthenticated) {
       fbContent = (
         <FacebookProvider appId="226965631684229">
           <LoginButton
             scope="email"
-            onClick={this.componentClicked}
             onCompleted={this.handleResponse}
-            onError={this.handleError}
+            onError={this.handleResponse}
           >
             <span>Login via Facebook</span>
           </LoginButton>
         </FacebookProvider>
       );
     }
-    return <div>{fbContent}</div>;
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    } else {
+      return <div>{fbContent}</div>;
+    }
   }
 }
-
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.reducerAuth.isAuthenticated
+});
+export default connect(
+  mapStateToProps,
+  { loginSuccess }
+)(Login);

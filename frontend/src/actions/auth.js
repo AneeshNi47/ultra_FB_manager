@@ -1,32 +1,33 @@
 import axios from "axios";
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "./types";
+import { returnErrors } from "./messages";
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_IMAGE, GET_ERRORS } from "./types";
 
 //Login user
 export const loginSuccess = data => dispatch => {
   dispatch({
     type: LOGIN_SUCCESS,
-    user_details: data.profile,
-    user_image: data.profile.picture,
-    user_token: data.profile.tokenDetail.accessToken
+    payload: data
   });
 };
 
-//Load user using token
-export const loadUser = () => (dispatch, getState) => {
-  dispatch({ type: USER_LOADING });
-
+//Load user images
+export const loadUserImage = () => (dispatch, getState) => {
+  const token = getState().reducerAuth.token;
   axios
-    .get("/api/auth/user", tokenConfig(getState))
+    .get(
+      `https://graph.facebook.com/v7.0/me?fields=picture.width(400).height(400)&access_token=${token}`
+    )
     .then(res => {
       dispatch({
-        type: USER_LOADED,
-        payload: res.data
+        type: USER_IMAGE,
+        payload: res,
+        image_url: res.data.picture.data.url
       });
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
-        type: AUTH_ERROR
+        type: GET_ERRORS
       });
     });
 };
@@ -36,20 +37,4 @@ export const logoutUser = () => dispatch => {
   dispatch({
     type: LOGOUT_SUCCESS
   });
-};
-
-//setup config with token--helper function
-export const tokenConfig = getState => {
-  const token = getState().reducerAuth.token;
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-    //console.log(config.headers);
-  }
-  return config;
 };

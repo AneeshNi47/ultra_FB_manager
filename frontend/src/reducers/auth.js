@@ -1,32 +1,29 @@
-import { GET_USERS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/types";
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_IMAGE } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
-  isLoading: false,
   user_details: null,
   user_image: null,
-  user_token: null
+  user_imageUrl: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_USERS:
-      return {
-        ...state,
-        isAuthenticated: true,
-        user_details: null,
-        user_image: null,
-        user_token: null
-      };
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.user_token.accessToken);
+      localStorage.setItem("token", action.payload.tokenDetail.accessToken);
       return {
         ...state,
+        ...action.payload,
+        token: action.payload.tokenDetail.accessToken,
         isAuthenticated: true,
-        user_details: action.user_details,
-        user_image: action.user_image,
-        user_token: action.user_token
+        user_details: action.payload.profile
+      };
+    case USER_IMAGE:
+      return {
+        ...state,
+        user_image: action.payload,
+        user_imageUrl: action.image_url
       };
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
@@ -36,8 +33,7 @@ export default function(state = initialState, action) {
         token: null,
         user_details: null,
         user_image: null,
-        user_token: null,
-        isLoading: false
+        user_imageUrl: null
       };
     default:
       return state;

@@ -7,19 +7,23 @@ import { Icon, Menu, Sidebar, Image } from "semantic-ui-react";
 
 export class HeaderOwn extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     logoutUser: PropTypes.func.isRequired
   };
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
-    console.log(user);
+    const { isAuthenticated, user_details } = this.props;
+    console.log(user_details);
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-lg-0">
         <li className="nav-item">
           <span className="navbar-text pt-50">
             <a className="nav-link">
-              <strong>{user ? `Welcome ${user.profile.name}` : ""}</strong>
+              {user_details ? (
+                <Image src={user_details.picture.data.url} avatar />
+              ) : (
+                <Icon circular name="users" />
+              )}
+              {user_details ? `Welcome ${user_details.name}` : ""}
             </a>
           </span>
         </li>
@@ -144,7 +148,8 @@ export class HeaderOwn extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.reducerAuth
+  user_details: state.reducerAuth.user_details,
+  isAuthenticated: state.reducerAuth.isAuthenticated
 });
 export default connect(
   mapStateToProps,
