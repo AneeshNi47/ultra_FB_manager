@@ -11,3 +11,4 @@ django-rest-knox
 djangorestframework
 django-csvimport
 django-filter
+django-sslserver
