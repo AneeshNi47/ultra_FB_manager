@@ -162,6 +162,8 @@ export class Listing extends Component {
                       onClick={this.handleClick}
                     >
                       <Form.Field
+                        data-toggle="tooltip"
+                        title="Click Here to edit"
                         readOnly
                         id="form-textarea-control-opinion"
                         control={Input}
@@ -193,6 +195,8 @@ export class Listing extends Component {
                       onClick={this.handleClick}
                     >
                       <Form.Field
+                        data-toggle="tooltip"
+                        title="Click Here to edit"
                         readOnly
                         id="form-textarea-control-opinion"
                         control={Input}
@@ -225,6 +229,8 @@ export class Listing extends Component {
                     onClick={this.handleClick}
                   >
                     <Form.Field
+                      data-toggle="tooltip"
+                      title="Click Here to edit"
                       readOnly
                       id="form-textarea-control-opinion"
                       control={TextArea}
@@ -234,7 +240,7 @@ export class Listing extends Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <Form.Field
-                      id="form-textarea-control-opinion"
+                      data-toggle="tooltip"
                       control={TextArea}
                       label="Add New Address"
                       placeholder={this.state.activeAccountSingleLineAddress}
@@ -248,6 +254,8 @@ export class Listing extends Component {
                     onClick={this.handleClick}
                   >
                     <Form.Field
+                      data-toggle="tooltip"
+                      title="Click Here to edit"
                       readOnly
                       id="form-input-control-error-email"
                       control={Input}
