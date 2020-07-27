@@ -4,11 +4,12 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./common/PrivateRoute";
 import { Provider } from "react-redux";
 import Login from "./Users/Login";
+import Listing from "./Listing/Listing";
+import Pages from "./Pages/Pages";
 import store from "../store";
 import Dashboard from "./Dashboard/Dashboard";
 import HeaderOwn from "./layout/HeaderOwn";
-import { Header, Segment, Sidebar } from "semantic-ui-react";
-import { FacebookProvider, Status, LoginButton } from "react-facebook";
+import { Segment, Sidebar, Container } from "semantic-ui-react";
 
 class App extends Component {
   handleResponse = data => {
@@ -32,13 +33,14 @@ class App extends Component {
             <Sidebar.Pusher dimmed={this.state.visible}>
               <Segment basic>
                 <Fragment>
-                  <div className="container">
-                    <br />
+                  <Container>
                     <Switch>
                       <Route exact path="/login" component={Login} />
                       <PrivateRoute exact path="/" component={Dashboard} />
+                      <PrivateRoute exact path="/pages" component={Pages} />
+                      <PrivateRoute exact path="/listing" component={Listing} />
                     </Switch>
-                  </div>
+                  </Container>
                 </Fragment>
               </Segment>
             </Sidebar.Pusher>

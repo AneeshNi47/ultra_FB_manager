@@ -23,6 +23,7 @@ export const loadUserImage = () => (dispatch, getState) => {
         payload: res,
         image_url: res.data.picture.data.url
       });
+      console.log(res);
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));

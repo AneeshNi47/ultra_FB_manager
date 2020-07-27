@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { loginSuccess } from "../../actions/auth";
 import { FacebookProvider, LoginButton } from "react-facebook";
+import { Icon, Card, Button } from "semantic-ui-react";
 
 export class Login extends Component {
   static propTypes = {
@@ -20,11 +21,12 @@ export class Login extends Component {
       fbContent = (
         <FacebookProvider appId="226965631684229">
           <LoginButton
+            className="ui icon button"
             scope="email"
             onCompleted={this.handleResponse}
             onError={this.handleResponse}
           >
-            <span>Login via Facebook</span>
+            <Icon name="facebook square" color="blue" size="huge" />
           </LoginButton>
         </FacebookProvider>
       );

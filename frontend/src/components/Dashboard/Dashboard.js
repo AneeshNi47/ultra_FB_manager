@@ -9,7 +9,6 @@ export class Dashboard extends Component {
   }
   render() {
     const { user_details, user_image, user_imageUrl } = this.props;
-    console.log(user_imageUrl);
     const extra = (
       <a>
         <Icon name="mail" />
@@ -22,7 +21,7 @@ export class Dashboard extends Component {
           image={user_imageUrl}
           header={user_details.name}
           meta="Friend"
-          description="Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat."
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vulputate, enim sed semper accumsan, ipsum elit rutrum augue, eleifend maximus dolor odio sit amet lectus. Etiam vitae felis a dolor blandit faucibus scelerisque tincidunt ligula. "
           extra={extra}
         />
       </div>

@@ -12,7 +12,6 @@ export class HeaderOwn extends Component {
 
   render() {
     const { isAuthenticated, user_details } = this.props;
-    console.log(user_details);
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-lg-0">
         <li className="nav-item">
@@ -23,7 +22,7 @@ export class HeaderOwn extends Component {
               ) : (
                 <Icon circular name="users" />
               )}
-              {user_details ? `Welcome ${user_details.name}` : ""}
+              {user_details ? `${user_details.first_name}` : ""}
             </a>
           </span>
         </li>
@@ -54,7 +53,6 @@ export class HeaderOwn extends Component {
         animation="push"
         icon="labeled"
         inverted
-        onHide={this.props.sidebar}
         vertical
         visible={this.props.visible}
         width="thin"
@@ -73,15 +71,21 @@ export class HeaderOwn extends Component {
         </Menu.Item>
         <Menu.Item as="a">
           <Icon name="user" />
-          Profile
+          <Link to="/" className="nav-link" onClick={this.props.sidebar}>
+            Dashboard
+          </Link>
         </Menu.Item>
         <Menu.Item as="a">
           <Icon name="copy outline" />
-          Pages
+          <Link to="/listing" className="nav-link" onClick={this.props.sidebar}>
+            Listing
+          </Link>
         </Menu.Item>
         <Menu.Item as="a">
           <Icon name="settings" />
-          Settings
+          <Link to="/listing" className="nav-link" onClick={this.props.sidebar}>
+            Settings
+          </Link>
         </Menu.Item>
       </Sidebar>
     );
