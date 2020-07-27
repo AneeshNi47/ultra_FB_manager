@@ -1,5 +1,5 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { returnErrors, createMessages } from "./messages";
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_IMAGE, GET_ERRORS } from "./types";
 
 //Login user
@@ -18,6 +18,7 @@ export const loadUserImage = () => (dispatch, getState) => {
       `https://graph.facebook.com/v7.0/me?fields=picture.width(400).height(400)&access_token=${token}`
     )
     .then(res => {
+      dispatch(createMessages({ newAccounts: "Your Account has been loaded" }));
       dispatch({
         type: USER_IMAGE,
         payload: res,

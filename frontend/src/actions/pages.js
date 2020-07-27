@@ -1,5 +1,5 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { createMessages, returnErrors } from "./messages";
 import {
   USER_ACCOUNTS,
   GET_ERRORS,
@@ -15,6 +15,7 @@ export const loadUserAccounts = () => (dispatch, getState) => {
       `https://graph.facebook.com/v7.0/me/?fields=accounts{about,description,name,picture.width(400).height(400),emails,category_list,website,phone,single_line_address,access_token}&access_token=${token}`
     )
     .then(res => {
+      dispatch(createMessages({ newAccounts: "Your pages have been loaded" }));
       dispatch({
         type: USER_ACCOUNTS,
         payload: res.data.accounts.data
@@ -35,6 +36,7 @@ export const updateAbout = (access_token, about, pageID) => dispatch => {
       `https://graph.facebook.com/v7.0/${pageID}?about=${about}&access_token=${access_token}`
     )
     .then(res => {
+      dispatch(createMessages({ aboutUpdate: "About the Updated" }));
       dispatch({
         type: UPDATE_STATUS,
         payload: res.success
@@ -54,6 +56,7 @@ export const updatePhone = (access_token, phone, pageID) => dispatch => {
       `https://graph.facebook.com/v7.0/${pageID}?phone=${phone}&access_token=${access_token}`
     )
     .then(res => {
+      dispatch(createMessages({ phoneUpdate: "Phone contact Updated" }));
       dispatch({
         type: UPDATE_STATUS,
         payload: res.success
@@ -73,6 +76,7 @@ export const updateWebsite = (access_token, website, pageID) => dispatch => {
       `https://graph.facebook.com/v7.0/${pageID}?website=${website}&access_token=${access_token}`
     )
     .then(res => {
+      dispatch(createMessages({ websiteUpdate: "Website Updated" }));
       dispatch({
         type: UPDATE_STATUS,
         payload: res.success

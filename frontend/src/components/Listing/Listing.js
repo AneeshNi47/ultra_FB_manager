@@ -91,17 +91,14 @@ export class Listing extends Component {
 
   componentDidUpdate() {
     if (this.state.updateAccounts) {
-      {
-        /*setTimeout(
+      setTimeout(
         function() {
           //Start the timer
           this.props.loadUserAccounts();
           console.log("action"); //After 1 second, set render to true
         }.bind(this),
-        3000
-      );*/
-      }
-      this.props.loadUserAccounts();
+        1000
+      );
       this.setState(prevState => ({
         updateAccounts: !prevState.updateAccounts
       }));
@@ -111,11 +108,7 @@ export class Listing extends Component {
     const { activeIndex } = this.state;
     return (
       <Fragment>
-        <Modal
-          size="fullscreen"
-          open={this.state.openModal}
-          onClose={this.close}
-        >
+        <Modal size="small" open={this.state.openModal} onClose={this.close}>
           <Modal.Header>{this.state.activeItemName}</Modal.Header>
           <Modal.Content image>
             <Image wrapped size="medium" src={this.state.activeAccountImage} />
@@ -138,6 +131,7 @@ export class Listing extends Component {
                     />
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 0}>
+                    <br />
                     <input
                       ref={ref => (this.inputAbout = ref)}
                       placeholder="New About "
@@ -171,23 +165,6 @@ export class Listing extends Component {
                         placeholder={this.state.activeAccountWebsite}
                       />
                     </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 1}>
-                      <input
-                        ref={ref => (this.inputWebsite = ref)}
-                        placeholder="New Website "
-                      />
-                      <Button
-                        onClick={() =>
-                          this.updateWebsite(
-                            this.state.activeAccountAccess,
-                            this.inputWebsite.value,
-                            this.state.activeAccountId
-                          )
-                        }
-                      >
-                        Submit
-                      </Button>
-                    </Accordion.Content>
 
                     <Accordion.Title
                       active={activeIndex === 2}
@@ -204,24 +181,41 @@ export class Listing extends Component {
                         placeholder={this.state.activeAccountPhone}
                       />
                     </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 2}>
-                      <input
-                        ref={ref => (this.inputPhone = ref)}
-                        placeholder="New Phone "
-                      />
-                      <Button
-                        onClick={() =>
-                          this.updatePhone(
-                            this.state.activeAccountAccess,
-                            this.inputPhone.value,
-                            this.state.activeAccountId
-                          )
-                        }
-                      >
-                        Submit
-                      </Button>
-                    </Accordion.Content>
                   </Form.Group>
+                  <Accordion.Content active={activeIndex === 2}>
+                    <input
+                      ref={ref => (this.inputPhone = ref)}
+                      placeholder="New Phone "
+                    />
+                    <Button
+                      onClick={() =>
+                        this.updatePhone(
+                          this.state.activeAccountAccess,
+                          this.inputPhone.value,
+                          this.state.activeAccountId
+                        )
+                      }
+                    >
+                      Submit
+                    </Button>
+                  </Accordion.Content>
+                  <Accordion.Content active={activeIndex === 1}>
+                    <input
+                      ref={ref => (this.inputWebsite = ref)}
+                      placeholder="New Website "
+                    />
+                    <Button
+                      onClick={() =>
+                        this.updateWebsite(
+                          this.state.activeAccountAccess,
+                          this.inputWebsite.value,
+                          this.state.activeAccountId
+                        )
+                      }
+                    >
+                      Submit
+                    </Button>
+                  </Accordion.Content>
 
                   <Accordion.Title
                     active={activeIndex === 3}
@@ -394,9 +388,6 @@ export class Listing extends Component {
             </Table.Row>
           </Table.Body>
         </Table>
-        <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
