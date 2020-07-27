@@ -1,7 +1,12 @@
-import { USER_ACCOUNTS } from "../actions/types";
+import {
+  USER_ACCOUNTS,
+  REMOVE_ACCOUNTS,
+  UPDATE_STATUS
+} from "../actions/types";
 
 const initialState = {
-  user_accounts: []
+  user_accounts: [],
+  status: ""
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +15,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         user_accounts: action.payload
+      };
+    case REMOVE_ACCOUNTS:
+      return {
+        user_account: []
+      };
+    case UPDATE_STATUS:
+      return {
+        status: action.payload
       };
     default:
       return state;

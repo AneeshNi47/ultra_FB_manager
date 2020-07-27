@@ -5,3 +5,5 @@ export const USER_IMAGE = "USER_IMAGE";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_ACCOUNTS = "USER_ACCOUNTS";
+export const REMOVE_ACCOUNTS = "REMOVE_ACCOUNTS";
+export const UPDATE_STATUS = "UPDATE_STATUS";

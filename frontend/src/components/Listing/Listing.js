@@ -14,18 +14,28 @@ import {
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadUserAccounts } from "../../actions/pages";
+import {
+  loadUserAccounts,
+  updateAbout,
+  updatePhone,
+  updateWebsite
+} from "../../actions/pages";
 
 export class Listing extends Component {
   static propTypes = {
     user_accounts: PropTypes.array.isRequired,
-    loadUserAccounts: PropTypes.func.isRequired
+    loadUserAccounts: PropTypes.func.isRequired,
+    updateAbout: PropTypes.func.isRequired,
+    updateWebsite: PropTypes.func.isRequired,
+    updatePhone: PropTypes.func.isRequired
   };
   componentDidMount() {
     this.props.loadUserAccounts();
   }
+
   state = {
     pageId: null,
+    updateAccounts: false,
     activeIndex: -1,
     openModal: false,
     activeItemName: "",
@@ -42,6 +52,7 @@ export class Listing extends Component {
       openModal: true,
       activeAccountId: account.id,
       activeAccountName: account.name,
+      activeAccountAccess: account.access_token,
       activeAccountAbout: account.about,
       activeAccountImage: account.picture.data.url,
       activeAccountEmails: account.emails,
@@ -61,6 +72,38 @@ export class Listing extends Component {
     this.setState({ activeIndex: newIndex });
   };
 
+  //function to update Phone, website, about
+  updateAbout(activeAccountAccess, value, activeAccountId) {
+    this.props.updateAbout(activeAccountAccess, value, activeAccountId);
+    this.setState({ updateAccounts: true });
+    this.close;
+  }
+  updatePhone(activeAccountAccess, value, activeAccountId) {
+    this.props.updatePhone(activeAccountAccess, value, activeAccountId);
+    this.setState({ updateAccounts: true });
+    this.close;
+  }
+  updateWebsite(activeAccountAccess, value, activeAccountId) {
+    this.props.updateWebsite(activeAccountAccess, value, activeAccountId);
+    this.setState({ updateAccounts: true });
+    this.close;
+  }
+
+  componentDidUpdate() {
+    if (this.state.updateAccounts) {
+      setTimeout(
+        function() {
+          //Start the timer
+          this.props.loadUserAccounts(); //After 1 second, set render to true
+        }.bind(this),
+        1000
+      );
+      this.close;
+      this.setState(prevState => ({
+        updateAccounts: !prevState.updateAccounts
+      }));
+    }
+  }
   render() {
     const { activeIndex } = this.state;
     return (
@@ -92,13 +135,21 @@ export class Listing extends Component {
                     />
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 0}>
-                    <Form.Field
-                      id="form-textarea-control-opinion"
-                      control={TextArea}
-                      label="Add New- About"
-                      placeholder={this.state.activeAccountAbout}
+                    <input
+                      ref={ref => (this.input = ref)}
+                      placeholder="New About "
                     />
-                    <Button>Save</Button>
+                    <Button
+                      onClick={() =>
+                        this.updateAbout(
+                          this.state.activeAccountAccess,
+                          this.input.value,
+                          this.state.activeAccountId
+                        )
+                      }
+                    >
+                      Submit
+                    </Button>
                   </Accordion.Content>
 
                   <Form.Group widths="equal">
@@ -116,13 +167,21 @@ export class Listing extends Component {
                       />
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 1}>
-                      <Form.Field
-                        id="form-textarea-control-opinion"
-                        control={Input}
-                        label="Add New Website"
-                        placeholder={this.state.activeAccountWebsite}
+                      <input
+                        ref={ref => (this.input = ref)}
+                        placeholder="New Website "
                       />
-                      <Button>Save</Button>
+                      <Button
+                        onClick={() =>
+                          this.updateWebsite(
+                            this.state.activeAccountAccess,
+                            this.input.value,
+                            this.state.activeAccountId
+                          )
+                        }
+                      >
+                        Submit
+                      </Button>
                     </Accordion.Content>
 
                     <Accordion.Title
@@ -139,13 +198,21 @@ export class Listing extends Component {
                       />
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 2}>
-                      <Form.Field
-                        id="form-textarea-control-opinion"
-                        control={Input}
-                        label="Add New Phone"
-                        placeholder={this.state.activeAccountPhone}
+                      <input
+                        ref={ref => (this.input = ref)}
+                        placeholder="New Phone "
                       />
-                      <Button>Save</Button>
+                      <Button
+                        onClick={() =>
+                          this.updatePhone(
+                            this.state.activeAccountAccess,
+                            this.input.value,
+                            this.state.activeAccountId
+                          )
+                        }
+                      >
+                        Submit
+                      </Button>
                     </Accordion.Content>
                   </Form.Group>
 
@@ -335,5 +402,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { loadUserAccounts }
+  { loadUserAccounts, updateAbout, updatePhone, updateWebsite }
 )(Listing);
