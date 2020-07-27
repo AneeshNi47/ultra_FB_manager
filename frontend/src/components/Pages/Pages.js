@@ -13,7 +13,6 @@ export class Pages extends Component {
     this.props.loadUserAccounts();
   }
   state = {
-    activeIndex: 0,
     pageId: null,
     openModal: false,
     activeItemName: "",
