@@ -85,20 +85,23 @@ export class Listing extends Component {
   }
   updateWebsite(activeAccountAccess, value, activeAccountId) {
     this.props.updateWebsite(activeAccountAccess, value, activeAccountId);
-    this.setState({ updateAccounts: true });
     this.close;
+    this.setState({ updateAccounts: true });
   }
 
   componentDidUpdate() {
     if (this.state.updateAccounts) {
-      setTimeout(
+      {
+        /*setTimeout(
         function() {
           //Start the timer
-          this.props.loadUserAccounts(); //After 1 second, set render to true
+          this.props.loadUserAccounts();
+          console.log("action"); //After 1 second, set render to true
         }.bind(this),
-        1000
-      );
-      this.close;
+        3000
+      );*/
+      }
+      this.props.loadUserAccounts();
       this.setState(prevState => ({
         updateAccounts: !prevState.updateAccounts
       }));
@@ -136,14 +139,14 @@ export class Listing extends Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 0}>
                     <input
-                      ref={ref => (this.input = ref)}
+                      ref={ref => (this.inputAbout = ref)}
                       placeholder="New About "
                     />
                     <Button
                       onClick={() =>
                         this.updateAbout(
                           this.state.activeAccountAccess,
-                          this.input.value,
+                          this.inputAbout.value,
                           this.state.activeAccountId
                         )
                       }
@@ -168,14 +171,14 @@ export class Listing extends Component {
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 1}>
                       <input
-                        ref={ref => (this.input = ref)}
+                        ref={ref => (this.inputWebsite = ref)}
                         placeholder="New Website "
                       />
                       <Button
                         onClick={() =>
                           this.updateWebsite(
                             this.state.activeAccountAccess,
-                            this.input.value,
+                            this.inputWebsite.value,
                             this.state.activeAccountId
                           )
                         }
@@ -199,14 +202,14 @@ export class Listing extends Component {
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 2}>
                       <input
-                        ref={ref => (this.input = ref)}
+                        ref={ref => (this.inputPhone = ref)}
                         placeholder="New Phone "
                       />
                       <Button
                         onClick={() =>
                           this.updatePhone(
                             this.state.activeAccountAccess,
-                            this.input.value,
+                            this.inputPhone.value,
                             this.state.activeAccountId
                           )
                         }
