@@ -1,6 +1,12 @@
 import axios from "axios";
 import { returnErrors, createMessages } from "./messages";
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_IMAGE, GET_ERRORS } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  USER_IMAGE,
+  GET_ERRORS,
+  REMOVE_ACCOUNTS
+} from "./types";
 
 //Login user
 export const loginSuccess = data => dispatch => {
@@ -38,5 +44,8 @@ export const loadUserImage = () => (dispatch, getState) => {
 export const logoutUser = () => dispatch => {
   dispatch({
     type: LOGOUT_SUCCESS
+  });
+  dispatch({
+    type: REMOVE_ACCOUNTS
   });
 };
