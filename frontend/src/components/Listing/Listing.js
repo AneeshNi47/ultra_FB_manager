@@ -105,6 +105,55 @@ export class Listing extends Component {
     }
   }
   render() {
+    const user_listing = (
+      <Table.Row textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          <Icon size="big" name="facebook f" />
+        </Table.Cell>
+        <Table.Cell>Facebook</Table.Cell>
+        <Table.Cell>ABCD</Table.Cell>
+        <Table.Cell>ACBD Street New</Table.Cell>
+        <Table.Cell>+987654321321</Table.Cell>
+        <Table.Cell>3/4</Table.Cell>
+        <Table.Cell>Yes</Table.Cell>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          <Icon size="big" color="red" name="close" />
+        </Table.Cell>
+        <Table.Cell>
+          <Dropdown text="Update" color="teal">
+            <Dropdown.Menu>
+              {this.props.user_accounts.map(account => (
+                <Dropdown.Item
+                  key={account.id}
+                  text={account.name}
+                  image={account.picture.data.url}
+                  onClick={() => this.openModalWithItem(account)}
+                />
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Table.Cell>
+      </Table.Row>
+    );
+    const no_listing = (
+      <Table.Row textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          <Icon size="big" name="facebook f" />
+        </Table.Cell>
+        <Table.Cell>Facebook</Table.Cell>
+        <Table.Cell>ABCD</Table.Cell>
+        <Table.Cell>ACBD Street New</Table.Cell>
+        <Table.Cell>+987654321321</Table.Cell>
+        <Table.Cell>3/4</Table.Cell>
+        <Table.Cell>Yes</Table.Cell>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          <Icon size="big" color="red" name="close" />
+        </Table.Cell>
+        <Table.Cell>
+          <Dropdown text="Update" color="teal" />
+        </Table.Cell>
+      </Table.Row>
+    );
     const { activeIndex } = this.state;
     return (
       <Fragment>
@@ -343,34 +392,7 @@ export class Listing extends Component {
               </Table.Cell>
               <Table.Cell />
             </Table.Row>
-            <Table.Row textAlign="center" verticalAlign="middle">
-              <Table.Cell textAlign="center" verticalAlign="middle">
-                <Icon size="big" name="facebook f" />
-              </Table.Cell>
-              <Table.Cell>Facebook</Table.Cell>
-              <Table.Cell>ABCD</Table.Cell>
-              <Table.Cell>ACBD Street New</Table.Cell>
-              <Table.Cell>+987654321321</Table.Cell>
-              <Table.Cell>3/4</Table.Cell>
-              <Table.Cell>Yes</Table.Cell>
-              <Table.Cell textAlign="center" verticalAlign="middle">
-                <Icon size="big" color="red" name="close" />
-              </Table.Cell>
-              <Table.Cell>
-                <Dropdown text="Update" color="teal">
-                  <Dropdown.Menu>
-                    {this.props.user_accounts.map(account => (
-                      <Dropdown.Item
-                        key={account.id}
-                        text={account.name}
-                        image={account.picture.data.url}
-                        onClick={() => this.openModalWithItem(account)}
-                      />
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row>
+            {this.state.user_accounts ? user_listing : no_listing}
             <Table.Row textAlign="center" verticalAlign="middle">
               <Table.Cell textAlign="center" verticalAlign="middle">
                 <Icon size="big" name="google plus g" />
