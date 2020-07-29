@@ -102,9 +102,6 @@ export class Listing extends Component {
         updateAccounts: !prevState.updateAccounts
       }));
     }
-    if (this.props.user_accounts) {
-      this.setState({ user_active: true });
-    }
   }
   render() {
     const user_listing = (
@@ -128,6 +125,11 @@ export class Listing extends Component {
         </Dropdown.Menu>
       </Dropdown>
     );
+    if (this.props.user_accounts) {
+      this.setState({
+        user_active: true
+      });
+    }
     const { activeIndex } = this.state;
     return (
       <Fragment>
