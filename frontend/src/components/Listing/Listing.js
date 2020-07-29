@@ -392,7 +392,7 @@ export class Listing extends Component {
               </Table.Cell>
               <Table.Cell />
             </Table.Row>
-            {this.state.user_accounts ? user_listing : no_listing}
+            {this.props.user_accounts ? user_listing : no_listing}
             <Table.Row textAlign="center" verticalAlign="middle">
               <Table.Cell textAlign="center" verticalAlign="middle">
                 <Icon size="big" name="google plus g" />
