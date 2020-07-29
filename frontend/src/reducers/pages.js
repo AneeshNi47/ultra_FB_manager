@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
       };
     case REMOVE_ACCOUNTS:
       return {
+        ...state,
         user_account: []
       };
     case UPDATE_STATUS:

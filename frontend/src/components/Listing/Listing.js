@@ -34,6 +34,7 @@ export class Listing extends Component {
   }
 
   state = {
+    user_active: false,
     pageId: null,
     updateAccounts: false,
     activeIndex: -1,
@@ -76,21 +77,19 @@ export class Listing extends Component {
   updateAbout(activeAccountAccess, value, activeAccountId) {
     this.props.updateAbout(activeAccountAccess, value, activeAccountId);
     this.setState({ updateAccounts: true });
-    this.close;
   }
   updatePhone(activeAccountAccess, value, activeAccountId) {
     this.props.updatePhone(activeAccountAccess, value, activeAccountId);
     this.setState({ updateAccounts: true });
-    this.close;
   }
   updateWebsite(activeAccountAccess, value, activeAccountId) {
     this.props.updateWebsite(activeAccountAccess, value, activeAccountId);
-    this.close;
     this.setState({ updateAccounts: true });
   }
 
   componentDidUpdate() {
     if (this.state.updateAccounts) {
+      this.close;
       setTimeout(
         function() {
           //Start the timer
@@ -103,56 +102,31 @@ export class Listing extends Component {
         updateAccounts: !prevState.updateAccounts
       }));
     }
+    if (this.props.user_accounts) {
+      this.setState({ user_active: true });
+    }
   }
   render() {
     const user_listing = (
-      <Table.Row textAlign="center" verticalAlign="middle">
-        <Table.Cell textAlign="center" verticalAlign="middle">
-          <Icon size="big" name="facebook f" />
-        </Table.Cell>
-        <Table.Cell>Facebook</Table.Cell>
-        <Table.Cell>ABCD</Table.Cell>
-        <Table.Cell>ACBD Street New</Table.Cell>
-        <Table.Cell>+987654321321</Table.Cell>
-        <Table.Cell>3/4</Table.Cell>
-        <Table.Cell>Yes</Table.Cell>
-        <Table.Cell textAlign="center" verticalAlign="middle">
-          <Icon size="big" color="red" name="close" />
-        </Table.Cell>
-        <Table.Cell>
-          <Dropdown text="Update" color="teal">
-            <Dropdown.Menu>
-              {this.props.user_accounts.map(account => (
-                <Dropdown.Item
-                  key={account.id}
-                  text={account.name}
-                  image={account.picture.data.url}
-                  onClick={() => this.openModalWithItem(account)}
-                />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Table.Cell>
-      </Table.Row>
+      <Dropdown text="Update" color="teal">
+        <Dropdown.Menu>
+          {this.props.user_accounts.map(account => (
+            <Dropdown.Item
+              key={account.id}
+              text={account.name}
+              image={account.picture.data.url}
+              onClick={() => this.openModalWithItem(account)}
+            />
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
     const no_listing = (
-      <Table.Row textAlign="center" verticalAlign="middle">
-        <Table.Cell textAlign="center" verticalAlign="middle">
-          <Icon size="big" name="facebook f" />
-        </Table.Cell>
-        <Table.Cell>Facebook</Table.Cell>
-        <Table.Cell>ABCD</Table.Cell>
-        <Table.Cell>ACBD Street New</Table.Cell>
-        <Table.Cell>+987654321321</Table.Cell>
-        <Table.Cell>3/4</Table.Cell>
-        <Table.Cell>Yes</Table.Cell>
-        <Table.Cell textAlign="center" verticalAlign="middle">
-          <Icon size="big" color="red" name="close" />
-        </Table.Cell>
-        <Table.Cell>
-          <Dropdown text="Update" color="teal" />
-        </Table.Cell>
-      </Table.Row>
+      <Dropdown text="Update" color="teal">
+        <Dropdown.Menu>
+          <Dropdown.Item text="No pages" />
+        </Dropdown.Menu>
+      </Dropdown>
     );
     const { activeIndex } = this.state;
     return (
@@ -392,7 +366,23 @@ export class Listing extends Component {
               </Table.Cell>
               <Table.Cell />
             </Table.Row>
-            {this.props.user_accounts ? user_listing : no_listing}
+            <Table.Row textAlign="center" verticalAlign="middle">
+              <Table.Cell textAlign="center" verticalAlign="middle">
+                <Icon size="big" name="facebook f" />
+              </Table.Cell>
+              <Table.Cell>Facebook</Table.Cell>
+              <Table.Cell>ABCD</Table.Cell>
+              <Table.Cell>ACBD Street New</Table.Cell>
+              <Table.Cell>+987654321321</Table.Cell>
+              <Table.Cell>3/4</Table.Cell>
+              <Table.Cell>Yes</Table.Cell>
+              <Table.Cell textAlign="center" verticalAlign="middle">
+                <Icon size="big" color="red" name="close" />
+              </Table.Cell>
+              <Table.Cell>
+                {this.state.user_active ? user_listing : no_listing}
+              </Table.Cell>
+            </Table.Row>
             <Table.Row textAlign="center" verticalAlign="middle">
               <Table.Cell textAlign="center" verticalAlign="middle">
                 <Icon size="big" name="google plus g" />
