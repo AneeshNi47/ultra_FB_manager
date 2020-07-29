@@ -34,7 +34,6 @@ export class Listing extends Component {
   }
 
   state = {
-    user_active: false,
     pageId: null,
     updateAccounts: false,
     activeIndex: -1,
@@ -89,7 +88,6 @@ export class Listing extends Component {
 
   componentDidUpdate() {
     if (this.state.updateAccounts) {
-      this.close;
       setTimeout(
         function() {
           //Start the timer
@@ -125,11 +123,6 @@ export class Listing extends Component {
         </Dropdown.Menu>
       </Dropdown>
     );
-    if (this.props.user_accounts) {
-      this.setState({
-        user_active: true
-      });
-    }
     const { activeIndex } = this.state;
     return (
       <Fragment>
@@ -301,6 +294,7 @@ export class Listing extends Component {
             </Button>
           </Modal.Actions>
         </Modal>
+
         <Table singleLine>
           <Table.Header>
             <Table.Row>
@@ -382,7 +376,7 @@ export class Listing extends Component {
                 <Icon size="big" color="red" name="close" />
               </Table.Cell>
               <Table.Cell>
-                {this.state.user_active ? user_listing : no_listing}
+                {this.props.user_accounts ? user_listing : no_listing}
               </Table.Cell>
             </Table.Row>
             <Table.Row textAlign="center" verticalAlign="middle">
